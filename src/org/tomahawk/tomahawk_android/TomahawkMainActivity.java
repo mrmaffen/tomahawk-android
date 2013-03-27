@@ -18,10 +18,11 @@
  */
 package org.tomahawk.tomahawk_android;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+import android.view.View;
 
 /**
  * This class represents the main Activity for the app.
@@ -36,20 +37,23 @@ public class TomahawkMainActivity extends SherlockFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        View view = getLayoutInflater().inflate(R.layout.tomahawk_main_activity, null);
+        setContentView(view);
 
         Intent i = new Intent(this, CollectionActivity.class);
-        i.putExtra(CollectionActivity.COLLECTION_ID_EXTRA, ((TomahawkApp) getApplication())
-                .getSourceList().getLocalSource().getCollection().getId());
+        i.putExtra(CollectionActivity.COLLECTION_ID_EXTRA,
+                ((TomahawkApp) getApplication()).getSourceList().getLocalSource().getCollection()
+                        .getId());
         startActivity(i);
     }
 
-    /* (non-Javadoc)
-     * @see com.actionbarsherlock.app.SherlockFragmentActivity#onDestroy()
+    /* 
+     * (non-Javadoc)
+     * @see android.support.v4.app.FragmentActivity#onResume()
      */
     @Override
-	public void onDestroy() {
-        super.onDestroy();
-        TomahawkApp app = (TomahawkApp) getApplication();
-        app.unbindService();
-	}
+    public void onResume() {
+        super.onResume();
+        finish();
+    }
 }

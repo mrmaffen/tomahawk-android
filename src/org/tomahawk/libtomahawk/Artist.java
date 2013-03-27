@@ -17,42 +17,83 @@
  */
 package org.tomahawk.libtomahawk;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-
-/**
- * This class is used to compare two Artists.
- */
-class ArtistComparator implements Comparator<Artist> {
-    public int compare(Artist a1, Artist a2) {
-        return a1.getName().compareTo(a2.getName());
-    }
-}
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This class represents an Artist.
  */
-public class Artist implements Serializable {
+public class Artist implements TomahawkBaseAdapter.TomahawkListItem {
 
-    private static final long serialVersionUID = -5358580053668357261L;
+    private static ConcurrentHashMap<Long, Artist> sArtists = new ConcurrentHashMap<Long, Artist>();
 
     private long mId;
+
     private String mName;
-    private HashMap<Long, Album> mAlbums;
-    private HashMap<Long, Track> mTracks;
+
+    private ConcurrentHashMap<Long, Album> mAlbums;
+
+    private ConcurrentHashMap<Long, Track> mTracks;
+
+    private float mScore;
+
+    public Artist() {
+    }
 
     public Artist(long id) {
         mId = id;
-        mAlbums = new HashMap<Long, Album>();
-        mTracks = new HashMap<Long, Track>();
+        mAlbums = new ConcurrentHashMap<Long, Album>();
+        mTracks = new ConcurrentHashMap<Long, Track>();
     }
 
+    /**
+     * Construct a new Album from the id
+     */
+    public static Artist get(long id) {
+
+        if (!sArtists.containsKey(id)) {
+            sArtists.put(id, new Artist(id));
+        }
+
+        return sArtists.get(id);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
         return mName;
+    }
+
+    /* 
+     * (non-Javadoc)
+     * @see org.tomahawk.libtomahawk.TomahawkListItem#getName()
+     */
+    @Override
+    public String getName() {
+        return mName;
+    }
+
+    /* 
+     * (non-Javadoc)
+     * @see org.tomahawk.libtomahawk.TomahawkListItem#getArtist()
+     */
+    @Override
+    public Artist getArtist() {
+        return this;
+    }
+
+    /* 
+     * (non-Javadoc)
+     * @see org.tomahawk.libtomahawk.TomahawkListItem#getAlbum()
+     */
+    @Override
+    public Album getAlbum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     public void addTrack(Track track) {
@@ -71,16 +112,12 @@ public class Artist implements Serializable {
 
     public ArrayList<Album> getAlbums() {
         ArrayList<Album> albums = new ArrayList<Album>(mAlbums.values());
-        Collections.sort(albums, new AlbumComparator());
+        Collections.sort(albums, new AlbumComparator(AlbumComparator.COMPARE_ALPHA));
         return albums;
     }
 
     public void setName(String name) {
         mName = name;
-    }
-
-    public String getName() {
-        return mName;
     }
 
     public void setId(long id) {
@@ -89,5 +126,13 @@ public class Artist implements Serializable {
 
     public long getId() {
         return mId;
+    }
+
+    public float getScore() {
+        return mScore;
+    }
+
+    public void setScore(float score) {
+        this.mScore = score;
     }
 }

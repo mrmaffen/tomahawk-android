@@ -17,22 +17,16 @@
  */
 package org.tomahawk.libtomahawk.playlist;
 
-import java.io.Serializable;
-
 import org.tomahawk.libtomahawk.Artist;
 import org.tomahawk.libtomahawk.Track;
 
 /**
  * Class that represents a list of songs from a given Artist.
  */
-public class ArtistPlaylist extends Playlist implements Serializable {
-
-    private static final long serialVersionUID = -5293315483953783524L;
+public class ArtistPlaylist extends Playlist {
 
     /**
      * Create an ArtistPlaylist from Artist.
-     * 
-     * @return
      */
     public static ArtistPlaylist fromArtist(Artist artist) {
         ArtistPlaylist pl = new ArtistPlaylist(artist.getName());
@@ -42,8 +36,7 @@ public class ArtistPlaylist extends Playlist implements Serializable {
     }
 
     /**
-     * Creates an ArtistPlaylist from Artist and sets the current Track to the
-     * Track at idx.
+     * Creates an ArtistPlaylist from Artist and sets the current Track to the Track at idx.
      */
     public static ArtistPlaylist fromArtist(Artist artist, Track currentTrack) {
         ArtistPlaylist pl = new ArtistPlaylist(artist.getName());
@@ -54,8 +47,6 @@ public class ArtistPlaylist extends Playlist implements Serializable {
 
     /**
      * Constructor.
-     * 
-     * @param name
      */
     protected ArtistPlaylist(String name) {
         super(name);

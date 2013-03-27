@@ -17,69 +17,105 @@
  */
 package org.tomahawk.libtomahawk;
 
-import java.io.Serializable;
-import java.util.Comparator;
+import org.tomahawk.libtomahawk.resolver.Resolver;
 
-
-/**
- * This class is used to compare two Tracks.
- */
-class TrackComparator implements Comparator<Track> {
-
-    public static final int COMPARE_DISCNUM = 0;
-    public static final int COMPARE_ALPHA = 1;
-
-    private static int mFlag = COMPARE_DISCNUM;
-
-    public TrackComparator(int flag) {
-        super();
-        mFlag = flag;
-    }
-
-    public int compare(Track t1, Track t2) {
-
-        switch (mFlag) {
-
-        case COMPARE_DISCNUM:
-            Integer num1 = t1.getTrackNumber();
-            Integer num2 = t2.getTrackNumber();
-            return num1.compareTo(num2);
-
-        case COMPARE_ALPHA:
-            return t1.getTitle().compareTo(t2.getTitle());
-
-        }
-
-        return 0;
-    }
-}
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This class represents a track.
  */
-public class Track implements Serializable {
+public class Track implements TomahawkBaseAdapter.TomahawkListItem {
 
-    private static final long serialVersionUID = 1L;
-
-    private long mId;
+    private static ConcurrentHashMap<Long, Track> sTracks = new ConcurrentHashMap<Long, Track>();
 
     /**
      * Path of file or URL.
      */
     private String mPath;
-    private String mTitle;
+
+    private boolean mIsLocal = true;
+
+    private String mName;
+
     private Album mAlbum;
+
     private Artist mArtist;
+
+    private int mBitrate;
+
+    private int mSize;
+
     private long mDuration;
+
     private int mTrackNumber;
+
+    private int mYear;
+
+    private long mId;
+
+    private Resolver mResolver;
+
+    private String mLinkUrl;
+
+    private String mPurchaseUrl;
+
+    private float mScore;
+
+    private boolean isResolved;
+
+    public Track() {
+    }
 
     public Track(long l) {
         setId(l);
     }
 
+    /**
+     * Construct a new Album from the id
+     */
+    public static Track get(long id) {
+
+        if (!sTracks.containsKey(id)) {
+            sTracks.put(id, new Track(id));
+        }
+
+        return sTracks.get(id);
+    }
+
+    /* 
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
-        return getTitle();
+        return getName();
+    }
+
+    /* 
+     * (non-Javadoc)
+     * @see org.tomahawk.libtomahawk.TomahawkListItem#getName()
+     */
+    @Override
+    public String getName() {
+        return mName;
+    }
+
+    /* 
+     * (non-Javadoc)
+     * @see org.tomahawk.libtomahawk.TomahawkListItem#getArtist()
+     */
+    @Override
+    public Artist getArtist() {
+        return mArtist;
+    }
+
+    /* 
+     * (non-Javadoc)
+     * @see org.tomahawk.libtomahawk.TomahawkListItem#getAlbum()
+     */
+    @Override
+    public Album getAlbum() {
+        return mAlbum;
     }
 
     public long getId() {
@@ -98,28 +134,40 @@ public class Track implements Serializable {
         this.mPath = path;
     }
 
-    public String getTitle() {
-        return mTitle;
+    public boolean isLocal() {
+        return mIsLocal;
     }
 
-    public void setTitle(String title) {
-        this.mTitle = title;
+    public void setLocal(boolean mIsLocal) {
+        this.mIsLocal = mIsLocal;
     }
 
-    public Album getAlbum() {
-        return mAlbum;
+    public void setName(String name) {
+        this.mName = name;
     }
 
     public void setAlbum(Album album) {
         this.mAlbum = album;
     }
 
-    public Artist getArtist() {
-        return mArtist;
-    }
-
     public void setArtist(Artist artist) {
         this.mArtist = artist;
+    }
+
+    public int getBitrate() {
+        return mBitrate;
+    }
+
+    public void setBitrate(int bitrate) {
+        this.mBitrate = bitrate;
+    }
+
+    public int getSize() {
+        return mSize;
+    }
+
+    public void setSize(int size) {
+        this.mSize = size;
     }
 
     public long getDuration() {
@@ -137,4 +185,54 @@ public class Track implements Serializable {
     public void setTrackNumber(int trackNumber) {
         this.mTrackNumber = trackNumber;
     }
+
+    public int getYear() {
+        return mYear;
+    }
+
+    public void setYear(int year) {
+        this.mYear = year;
+    }
+
+    public Resolver getResolver() {
+        return mResolver;
+    }
+
+    public void setResolver(Resolver resolver) {
+        this.mResolver = resolver;
+    }
+
+    public float getScore() {
+        return mScore;
+    }
+
+    public void setScore(float score) {
+        this.mScore = score;
+    }
+
+    public String getPurchaseUrl() {
+        return mPurchaseUrl;
+    }
+
+    public void setPurchaseUrl(String mPurchaseUrl) {
+        this.mPurchaseUrl = mPurchaseUrl;
+    }
+
+    public String getLinkUrl() {
+        return mLinkUrl;
+    }
+
+    public void setLinkUrl(String mLinkUrl) {
+        this.mLinkUrl = mLinkUrl;
+    }
+
+    public boolean isResolved() {
+        return isResolved;
+    }
+
+    public void setResolved(boolean resolved) {
+        isResolved = resolved;
+    }
+
+
 }

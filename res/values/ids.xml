@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="tomahawklistadapter_viewtype_header" type="id"/>
+    <item name="tomahawklistadapter_viewtype_contentheader" type="id"/>
+    <item name="tomahawklistadapter_viewtype_singlelinelistitem" type="id"/>
+    <item name="tomahawklistadapter_viewtype_doublelinelistitem" type="id"/>
+    <item name="tomahawklistadapter_viewtype_doublelineimagelistitem" type="id"/>
+    <item name="tomahawklistadapter_viewtype_doublelineplaystateimagelistitem" type="id"/>
+    <item name="tomahawklistadapter_viewtype_griditem" type="id"/>
+    <item name="tomahawklistadapter_viewholder" type="id"/>
+    <item name="scriptresolver_resolver_init" type="id"/>
+    <item name="scriptresolver_resolver_settings" type="id"/>
+    <item name="scriptresolver_resolver_userconfig" type="id"/>
+    <item name="scriptresolver_resolve" type="id"/>
+    <item name="scriptresolver_add_track_results_string" type="id"/>
+
+</resources>

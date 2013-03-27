@@ -1,16 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*   == This file is part of Tomahawk Player - <http://tomahawk-player.org> ===
+ *
+ *   Copyright 2013, Enno Gottschalk <mrmaffen@googlemail.com>
+ *   Copyright 2012, Christopher Reichert <creichert07@gmail.com>
+ *
+ *   Tomahawk is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   Tomahawk is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with Tomahawk. If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
 <resources>
-
-    <string name="app_name">Tomahawk</string>
-    <string name="menu_settings">Settings</string>
-    <string name="no_data">No data</string>
-    <string name="title_activity_tomahawk_main">Tomahawk</string>
-    <string name="title_mymusic_fragment">Albums</string>
-    <string name="title_browse_fragment">Artists</string>
-    <string name="title_friends_fragment">Tracks</string>
-    <string name="title_player_fragment">Player</string>
-    <string name="use_internet_permission">Internet Permission</string>
-    <string name="title_playback_activity">Playback</string>
-    <string name="playback_service_label">PlaybackService</string>
-    <string name="use_internet_permission">Internet Permission</string>
-
+    <string name="appname_string">Tomahawk</string>
+    <string name="nodata_string">No data</string>
+    <string name="mainactivity_title_string">Tomahawk</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="localcollectionactivity_title_string">"My Music"</string>
+    <string name="remotecollectionactivity_title_string">Remote</string>
+    <string name="globalcollectionfragment_title_string">Global</string>
+    <string name="tracksfragment_title_string">Tracks</string>
+    <string name="albumsfragment_title_string">Albums</string>
+    <string name="artistsfragment_title_string">Artists</string>
+    <string name="playlistsfragment_title_string">Playlists</string>
+    <string name="searchfragment_title_string">Search</string>
+    <string name="searchactivity_title_string">Search</string>
+    <string name="searchactivity_searchforonlinesources">Also search online</string>
+    <string name="searchactivity_searchtype">Search for</string>
+    <string name="playbackfragment_title_string">Playback</string>
+    <string name="playbackplaylistfragment_title_string">Playlist</string>
+    <string name="playbackactivity_seekbar_completion_time_string">-:--</string>
+    <string name="playbackactivity_seekbar_current_time_string">0:00</string>
+    <string name="playbackactivity_toastshuffleon_string">"Shuffle is on"</string>
+    <string name="playbackactivity_toastshuffleoff_string">"Shuffle is off"</string>
+    <string name="playbackactivity_toastrepeaton_string">"Repeat is on"</string>
+    <string name="playbackactivity_toastrepeatoff_string">"Repeat is off"</string>
+    <string name="playbackactivity_unknown_string">"&#60;unknown&#62;"</string>
+    <string name="playbackactivity_no_track">"&#60;no track&#62;"</string>
+    <string name="playbackactivity_save_playlist_dialog_title">"Save the current playlist"</string>
+    <string name="playbackactivity_choose_playlist_dialog_title">"Choose a playlist"</string>
+    <string name="playbackactivity_create_playlist_dialog_title">"Create a new playlist"</string>
+    <string name="playbackactivity_playlist_dialog_name_hint">"Name"</string>
+    <string name="playbackservice_label_string">PlaybackService</string>
+    <string name="loginactivity_username_label_string">Username:</string>
+    <string name="loginactivity_password_label_string">Password:</string>
+    <string name="accounttype_string">org.tomahawk</string>
+    <string name="loginactivity_loginbutton_label_string">Login</string>
+    <string name="authenticationdialog_text_string">Authenticating...</string>
+    <string name="authenticationactivity_invalid_credentials_string">Username or password
+        incorrect
+    </string>
+    <string name="settingsactivity_title_string">Settings</string>
+    <string name="playbacksettingsactivity_title_string">Playback Settings</string>
+    <string name="playbacksettingsactivity_playbackonheadset_title_string">Headset playback</string>
+    <string name="playbacksettingsactivity_playbackonheadset_summary_string">Starts playing music
+        when a headset is connected
+    </string>
+    <string name="crash_dialog_title">Tomahawk has crashed</string>
+    <string name="crash_dialog_text">An unexpected error occurred forcing the
+        application to stop. Please help us fix this by sending us error data,
+        all you have to do is click OK.
+    </string>
+    <string name="crash_dialog_comment_prompt">You might add your comments about the problem
+        below:
+    </string>
+    <string name="crash_dialog_ok_toast">Thank you !</string>
 </resources>

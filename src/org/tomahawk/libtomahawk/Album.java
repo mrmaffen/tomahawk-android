@@ -17,42 +17,38 @@
  */
 package org.tomahawk.libtomahawk;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.util.LruCache;
 
-/**
- * This class is used to compare two Albums.
- */
-class AlbumComparator implements Comparator<Album> {
-    public int compare(Album a1, Album a2) {
-        return a1.getName().compareTo(a2.getName());
-    }
-}
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Class which represents a Tomahawk Album.
  */
-public class Album implements Serializable {
+public class Album implements TomahawkBaseAdapter.TomahawkListItem {
 
-    private static final long serialVersionUID = -5936447328960273526L;
+    private static ConcurrentHashMap<Long, Album> sAlbums = new ConcurrentHashMap<Long, Album>();
 
     private static CoverCache sCoverCache;
-    private HashMap<Long, Track> mTracks;
+
+    private ConcurrentHashMap<Long, Track> mTracks;
 
     private long mId;
+
     private String mName;
+
     private String mAlbumArt;
+
     private String mFirstYear;
+
     private String mLastYear;
+
     private Artist mArtist;
+
+    private float mScore;
 
     /**
      * Cache album cover art.
@@ -81,29 +77,64 @@ public class Album implements Serializable {
         }
     }
 
-    /**
-     * Construct a new Album from the id
-     * 
-     * @param id
-     */
+    public Album() {
+    }
+
     public Album(long id) {
         setId(id);
-
-        mTracks = new HashMap<Long, Track>();
+        mTracks = new ConcurrentHashMap<Long, Track>();
     }
 
     /**
-     * Return a the name of this Album.
+     * Construct a new Album from the id
+     */
+    public static Album get(long id) {
+
+        if (!sAlbums.containsKey(id)) {
+            sAlbums.put(id, new Album(id));
+        }
+
+        return sAlbums.get(id);
+    }
+
+    /* 
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         return mName;
     }
 
+    /* 
+     * (non-Javadoc)
+     * @see org.tomahawk.libtomahawk.TomahawkListItem#getName()
+     */
+    @Override
+    public String getName() {
+        return mName;
+    }
+
+    /* 
+     * (non-Javadoc)
+     * @see org.tomahawk.libtomahawk.TomahawkListItem#getArtist()
+     */
+    @Override
+    public Artist getArtist() {
+        return mArtist;
+    }
+
+    /* 
+     * (non-Javadoc)
+     * @see org.tomahawk.libtomahawk.TomahawkListItem#getAlbum()
+     */
+    @Override
+    public Album getAlbum() {
+        return this;
+    }
+
     /**
      * Add a Track to this Album.
-     * 
-     * @param track
      */
     public void addTrack(Track track) {
         mTracks.put(track.getId(), track);
@@ -111,8 +142,6 @@ public class Album implements Serializable {
 
     /**
      * Get a list of all Tracks from this Album.
-     * 
-     * @return
      */
     public ArrayList<Track> getTracks() {
         ArrayList<Track> tracks = new ArrayList<Track>(mTracks.values());
@@ -122,8 +151,6 @@ public class Album implements Serializable {
 
     /**
      * Return the Album id.
-     * 
-     * @return
      */
     public long getId() {
         return mId;
@@ -131,15 +158,9 @@ public class Album implements Serializable {
 
     /**
      * Set the Album id.
-     * 
-     * @param id
      */
     public void setId(long id) {
         this.mId = id;
-    }
-
-    public String getName() {
-        return mName;
     }
 
     public void setName(String name) {
@@ -148,13 +169,19 @@ public class Album implements Serializable {
 
     public Bitmap getAlbumArt() {
 
-        if (mAlbumArt == null)
+        if (mAlbumArt == null) {
             return null;
+        }
 
-        if (sCoverCache == null)
+        if (sCoverCache == null) {
             sCoverCache = new CoverCache();
+        }
 
         return sCoverCache.get(mAlbumArt);
+    }
+
+    public String getAlbumArtPath() {
+        return mAlbumArt;
     }
 
     public void setAlbumArt(String albumArt) {
@@ -177,11 +204,16 @@ public class Album implements Serializable {
         mLastYear = lastYear;
     }
 
-    public Artist getArtist() {
-        return mArtist;
-    }
-
     public void setArtist(Artist artist) {
         mArtist = artist;
     }
+
+    public float getScore() {
+        return mScore;
+    }
+
+    public void setScore(float score) {
+        this.mScore = score;
+    }
+
 }
